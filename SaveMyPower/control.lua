@@ -11,16 +11,19 @@ end
 local function update_enabled_accumulators_filter()
   storage.enabled_accumulator_items_filter = {}
 
-  local blacklist = {}
+  local filter_mode_whitelist = settings.startup["accumulator-blacklist-as-whitelist"].value
+  local listed = {}
   for _, name in ipairs(split(settings.startup["accumulator-blacklist"].value)) do
-    blacklist[name] = true
+    listed[name] = true
   end
+
   for _, name in ipairs(split(bigunpack("found-accumulators"))) do
-    if not blacklist[name] then
+    if (filter_mode_whitelist and listed[name]) or (not filter_mode_whitelist and not listed[name]) then
       table.insert(storage.enabled_accumulator_items_filter, {filter = 'name', name = name})
     end
   end
 end
+
 
 -- local function update_enabled_batteries_filter()
 --   storage.enabled_battery_items_filter = {}

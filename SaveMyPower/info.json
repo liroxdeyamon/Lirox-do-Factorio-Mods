@@ -1,10 +1,10 @@
 {
   "name": "SaveMyPower",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "title": "Save My Power",
   "author": "LiroxDeYamon",
-  "description": "Saves power when picking up accumulators. Does not support modded ones yet. Contact @liroxdeyamon on Discord (or make a discussion on factorio mod portal) if you want compatibility or help with localization. Special thanks to Quezler for providing their code template.",
+  "description": "Saves power when picking up accumulators or unequipping batteries in power armor. Now supports EVERY MODDED ONE!!! Contact @liroxdeyamon on Discord (or make a discussion on factorio mod portal) if you want help with localization or report a bug. Special thanks to Quezler for providing their code template.",
   "factorio_version": "2.0",
-  "dependencies": [],
+  "dependencies": ["big-data-string2"],
   "settings": ["settings.lua"]
 }

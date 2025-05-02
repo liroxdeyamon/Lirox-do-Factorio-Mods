@@ -49,17 +49,55 @@ data:extend({
   -- },
   {
     type = "bool-setting",
-    name = "retain-on-player-mined",
+    name = "description-show-bar",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "c[a]"
+  },
+  {
+    type = "string-setting",
+    name = "description-bar-filled-color",
+    setting_type = "runtime-global",
+    default_value = "cyan",
+    allow_blank = false,
+    order = "c[b]"
+  },
+  {
+    type = "string-setting",
+    name = "description-bar-empty-color",
+    setting_type = "runtime-global",
+    default_value = "gray",
+    allow_blank = false,
+    order = "c[c]"
+  },
+  {
+    type = "bool-setting",
+    name = "description-show-percentage",
     setting_type = "runtime-global",
     default_value = true,
     order = "d[a]"
+  },
+  {
+    type = "string-setting",
+    name = "description-percentage-color",
+    setting_type = "runtime-global",
+    default_value = "cyan",
+    allow_blank = false,
+    order = "d[b]"
+  },
+  {
+    type = "bool-setting",
+    name = "retain-on-player-mined",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "e[a]"
   },
   {
     type = "bool-setting",
     name = "retain-on-robot-mined",
     setting_type = "runtime-global",
     default_value = true,
-    order = "d[b]"
+    order = "e[b]"
   },
   {
     type = "bool-setting",

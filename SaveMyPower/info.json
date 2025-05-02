@@ -1,6 +1,6 @@
 {
   "name": "SaveMyPower",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "title": "Save My Power",
   "author": "LiroxDeYamon",
   "description": "Saves power when picking up accumulators. Supports modded accumulators and quality. Contact @liroxdeyamon on Discord (or make a discussion on factorio mod portal) if you want help with localization or report a bug. Special thanks to Quezler for providing their code template.",

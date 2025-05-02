@@ -19,7 +19,7 @@ local function update_enabled_accumulators_filter()
 
   for _, name in ipairs(split(bigunpack("found-accumulators"))) do
     if (filter_mode_whitelist and listed[name]) or (not filter_mode_whitelist and not listed[name]) then
-      table.insert(storage.enabled_accumulator_items_filter, {filter = 'name', name = name})
+      table.insert(storage.enabled_accumulator_items_filter, {filter = "name", name = name})
     end
   end
 end
@@ -48,24 +48,39 @@ local function calculate_charge(energy, max_energy)
 end
 
 local function set_itemstack_charge_tag(itemstack, charge)
-  itemstack.set_tag('__charge__', {
+  itemstack.set_tag("__charge__", {
     charge = charge
   })
 end
 
 local function update_itemstack_description(itemstack, charge)
-  local description = {
-    '',
-    '[color=green][[/color][color=cyan]',
+  local description = {''}
+
+  if settings.global["description-show-bar"].value then
+    table.insert(description, {"",
+    "[color=green][[/color][color=",
+    settings.global["description-bar-filled-color"].value,
+    "]",
     string.rep('█', charge),
-    '[/color][color=gray]',
+    "[/color][color=",
+    settings.global["description-bar-empty-color"].value,
+    "]",
     string.rep('█', 10 - charge),
-    '[/color][color=green]][/color] [color=cyan] (',
+    "[/color][color=green]][/color]"})
+  end
+  if settings.global["description-show-percentage"].value then
+    table.insert(description, {"",
+    "[color=",
+    settings.global["description-percentage-color"].value
+    ,"] (",
     charge * 10,
-    "%)[/color]"
-  }
+    "%)[/color]"})
+  end
   if settings.global["debug-show-item-info"].value then
-    table.insert(description, {"", "\n", itemstack.name, "\n(To remove that description - uncheck Debug in settings then place it and collect back)"})
+    table.insert(description, {"",
+    "\n",
+    itemstack.name,
+    "\n(To remove that description - uncheck Debug in settings then place it and collect back)"})
   end
   itemstack.custom_description = description
 end
@@ -95,13 +110,13 @@ end
 local function on_built_entity(event, itemstack)
   if not (itemstack and itemstack.is_item_with_tags) then return end
 
-  local tags = itemstack.get_tag('__accumulator-energy__') -- migration
+  local tags = itemstack.get_tag("__accumulator-energy__") -- migration
   if tags then
     event.entity.energy = tags.energy_amount
     return
   end
 
-  local tags = itemstack.get_tag('__charge__')
+  local tags = itemstack.get_tag("__charge__")
   if tags then
     event.entity.energy = tags.charge / 10 * get_max_accumulator_energy_entity(event.entity)
     return
@@ -112,9 +127,14 @@ local function on_player_built_entity(event)
   on_built_entity(event, find_matching_itemstack(event.consumed_items, event.entity.name))
 end
 
+local function on_space_platform_built_entity(event)
+  on_built_entity(event, event.stack)
+end
+
 local function on_robot_built_entity(event)
   on_built_entity(event, event.stack)
 end
+
 
 local function on_player_mined_entity(event)
   if not settings.global["retain-on-player-mined"].value then return end
@@ -126,11 +146,18 @@ local function on_robot_mined_entity(event)
   on_mined_accumulator_entity(event, find_matching_itemstack(event.buffer, event.entity.name))
 end
 
+local function on_space_platform_mined_entity(event)
+  if not settings.global["retain-on-space-platform-mined"].value then return end
+  on_mined_accumulator_entity(event, find_matching_itemstack(event.buffer, event.entity.name))
+end
+
 local function register_events()
   script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity, storage.enabled_accumulator_items_filter)
   script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity, storage.enabled_accumulator_items_filter)
+  script.on_event(defines.events.on_space_platform_mined_entity, on_space_platform_mined_entity, storage.enabled_accumulator_items_filter)
   script.on_event(defines.events.on_built_entity, on_player_built_entity, storage.enabled_accumulator_items_filter)
   script.on_event(defines.events.on_robot_built_entity, on_robot_built_entity, storage.enabled_accumulator_items_filter)
+  script.on_event(defines.events.on_space_platform_built_entity, on_space_platform_built_entity, storage.enabled_accumulator_items_filter)
   -- script.on_event(defines.events.on_player_placed_equipment, on_player_placed_equipment)
   -- script.on_event(defines.events.on_player_removed_equipment, on_player_removed_equipment)
 end

@@ -1,0 +1,10 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.1.3
+Date: 03. 05. 2025
+  Minor Features:
+    - Added technology to enable retaining energy (can be disabled in startup settings)
+---------------------------------------------------------------------------------------------------
+Version: 0.1.4
+Date: 14. 05. 2025
+  Minor Features:
+    - Added toggleable shortcut to enable/disable mod's functionaily

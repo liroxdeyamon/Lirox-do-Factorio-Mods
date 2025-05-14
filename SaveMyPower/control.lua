@@ -1,5 +1,7 @@
 local bigunpack = require("__big-data-string2__.unpack")
 
+storage.player_power_preserve_enabled = storage.player_power_preserve_enabled or {}
+
 local function split(str)
   local result = {}
   for word in str:gmatch("%S+") do
@@ -137,20 +139,23 @@ end
 
 
 local function on_player_mined_entity(event)
+  if settings.startup["research-required"].value and not storage.advanced_power_conservation then return end
+  if not storage.player_power_preserve_enabled[event.player_index] then return end
   if not settings.global["retain-on-player-mined"].value then return end
   on_mined_accumulator_entity(event, find_matching_itemstack(event.buffer, event.entity.name))
 end
 
 local function on_robot_mined_entity(event)
+  if settings.startup["research-required"].value and not storage.advanced_power_conservation then return end
   if not settings.global["retain-on-robot-mined"].value then return end
   on_mined_accumulator_entity(event, find_matching_itemstack(event.buffer, event.entity.name))
 end
 
 local function on_space_platform_mined_entity(event)
+  if settings.startup["research-required"].value and not storage.advanced_power_conservation then return end
   if not settings.global["retain-on-space-platform-mined"].value then return end
   on_mined_accumulator_entity(event, find_matching_itemstack(event.buffer, event.entity.name))
 end
-
 local function register_events()
   script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity, storage.enabled_accumulator_items_filter)
   script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity, storage.enabled_accumulator_items_filter)
@@ -161,6 +166,41 @@ local function register_events()
   -- script.on_event(defines.events.on_player_placed_equipment, on_player_placed_equipment)
   -- script.on_event(defines.events.on_player_removed_equipment, on_player_removed_equipment)
 end
+
+script.on_event(defines.events.on_research_finished, function(event)
+  if event.research.name ~= "advanced_power_conservation" then return end
+  storage.advanced_power_conservation = true
+  for _, player in pairs(game.players) do
+    player.set_shortcut_available("SaveMyPower_enable", true)
+    storage.player_power_preserve_enabled[player.index] = true
+  end
+end)
+
+script.on_event(defines.events.on_lua_shortcut, function(event)
+  if event.prototype_name == "SaveMyPower_enable" then
+    local current = storage.player_power_preserve_enabled[event.player_index]
+    storage.player_power_preserve_enabled[event.player_index] = not current
+    game.get_player(event.player_index).set_shortcut_toggled("SaveMyPower_enable", not current)
+  end
+end)
+
+script.on_init(function()
+  local enabled = not settings.startup["research-required"].value or (storage.advanced_power_conservation or false)
+  for _, player in pairs(game.players) do
+    player.set_shortcut_available("SaveMyPower_enable", enabled)
+    storage.player_power_preserve_enabled[player.index] = enabled
+  end
+end)
+
+
+script.on_event(defines.events.on_player_created, function(event)
+  local enabled = not settings.startup["research-required"].value or (storage.advanced_power_conservation or false)
+  local player = game.get_player(event.player_index)
+  player.set_shortcut_available("SaveMyPower_enable", enabled)
+  storage.player_power_preserve_enabled[event.player_index] = enabled
+end)
+
+
 
 update_enabled_accumulators_filter()
 -- update_enabled_batteries_filter()

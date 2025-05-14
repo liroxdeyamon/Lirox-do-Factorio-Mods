@@ -1,12 +1,19 @@
 data:extend({
   {
+    type = "bool-setting",
+    name = "research-required",
+    setting_type = "startup",
+    default_value = true,
+    order = "a[a]"
+  },
+  {
     type = "int-setting",
     name = "minimum-energy-to-retain-accumulator",
     setting_type = "runtime-global",
     default_value = 1,
     minimum_value = 0,
     maximum_value = 10,
-    order = "a[a]"
+    order = "a[b]"
   },
   -- {
   --   type = "int-setting",

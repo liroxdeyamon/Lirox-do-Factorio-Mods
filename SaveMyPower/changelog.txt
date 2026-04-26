@@ -8,3 +8,25 @@ Version: 0.1.4
 Date: 14. 05. 2025
   Minor Features:
     - Added toggleable shortcut to enable/disable mod's functionaily
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 26. 04. 2026
+  Minor Features:
+    - Added more customization for item description
+    - Added custom command to update all charged accumulators' descriptions in player's inventory
+      /smp_update_descriptions
+  Optimizations:
+    - Removed Big Data String dependency
+    - Optimized event filters and added proper blacklist filtering
+    - Removed re-registering events after configuration changed
+  Bugfixes:
+    - Fixed mod not working with Solar Productivity
+    - Fixed crash with Space Exploration and Krastorio2 (accidentally)
+    - Fixed SaveMyPower_toggle had unknown key_sequence
+  Scripting:
+    - Migrated from __charge__ back to __accumulator-energy__, all items containing __charge__ tag would work as usual
+  Debug:
+    - Logging, logging everywhere
+  Ease of use:
+    - Changed blacklist to be runtime-global instead of startup
+    - Changed blacklist-as-whitelist to be runtime-global instead of startup

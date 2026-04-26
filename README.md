@@ -1,4 +1,8 @@
 # Lirox do Factorio Mods
- My Factorio Mods repo, you're welcome
+My Factorio Mods repo, you're welcome
 
-July 8, 2025 - I got burnt out, so I didn't update anything. Time to get to work, hopefully.
+### Please after opening an issue, contact me on my discord server for faster response time
+https://discord.gg/4d2Mwv8bPB 
+
+
+April 26 2026 - yo

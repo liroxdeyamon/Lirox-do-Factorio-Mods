@@ -1,9 +1,9 @@
 {
   "name": "SaveMyPower",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Save My Power",
   "author": "LiroxDeYamon",
-  "description": "Preserves power when picking up accumulators. Supports modded accumulators and quality. Highly customizable. Contact @liroxdeyamon on Discord (Scatterverse or Factorio) or make a discussion/issue on factorio mod portal/github if you want help with localization or report a bug. Special thanks to Quezler for providing their code template. Special thanks to RedRafe for allowing to use part of their code and partial help with Solar Productivity compatibility.",
+  "description": "Preserves power when picking up accumulators, roboports, batteries and shields. Supports modded items and quality. Highly customizable. Contact @liroxdeyamon on Discord (Scatterverse or Factorio) or make a discussion/issue on factorio mod portal/github if you want help with localization or report a bug. Special thanks to Quezler for providing their code template. Special thanks to RedRafe for allowing to use part of their code and partial help with Solar Productivity compatibility.",
   "factorio_version": "2.0",
   "dependencies": [
     "(?) solar-productivity"

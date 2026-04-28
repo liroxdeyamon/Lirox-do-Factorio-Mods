@@ -1,25 +1,34 @@
-local bigpack = require("__big-data-string2__.pack")
-
-log("Modifying accumulators to item-with-tags")
-for _, thing in pairs(data.raw["accumulator"]) do
-  if thing then
-    local name = thing.name
-    local from_sp = name:match("^sp%-%d+%-(.+)$")
-    
-    local item = data.raw['item'][name]
-    if item then
-      local new_item = table.deepcopy(item)
-      new_item.type = 'item-with-tags'
-      data:extend{new_item}
-      data.raw['item'][name] = nil
-      log("Modified " .. name)
-    elseif from_sp then
-      log("Not modifying " .. name .. " as its from Solar Productivity and has no custom item")
-    else
-      log("item for accumulator '" .. name .. "' not found, please contact mod author")
+local function convert_category_to_items_with_tags(category, options)
+  options = options or {}
+  log("Modifying " .. category .. " to item-with-tags")
+  for _, thing in pairs(data.raw[category] or {}) do
+    if thing then
+      local name = thing.name
+      local item = data.raw["item"] and data.raw["item"][name]
+      if item then
+        local new_item = table.deepcopy(item)
+        new_item.type = "item-with-tags"
+        data:extend{new_item}
+        data.raw["item"][name] = nil
+        log("Modified " .. name)
+      elseif options.skip_pattern and name:match(options.skip_pattern) then
+        log(options.skip_message:format(name))
+      else
+        log("Missing item for " .. name .. ", please contact mod author")
+      end
     end
   end
 end
+
+convert_category_to_items_with_tags("accumulator", {
+  skip_pattern = "^sp%-%d+%-(.+)$",
+  skip_message = "Skipping %s as its from Solar Productivity and has no custom item"
+})
+convert_category_to_items_with_tags("roboport")
+convert_category_to_items_with_tags("battery-equipment")
+convert_category_to_items_with_tags("energy-shield-equipment")
+convert_category_to_items_with_tags("personal-roboport-equipment")
+
 
 log("Registering research")
 if settings.startup["research-required"].value then

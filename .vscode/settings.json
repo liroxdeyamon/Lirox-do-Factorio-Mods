@@ -1,0 +1,12 @@
+{
+    "Lua.workspace.userThirdParty": [
+        "/home/lumividellir/.config/Code/User/workspaceStorage/e187b7760bdada50510e06bfd5c1e0c1/justarandomgeek.factoriomod-debug/sumneko-3rd"
+    ],
+    "Lua.workspace.checkThirdParty": "ApplyInMemory",
+    "factorio.versions": [
+        {
+            "name": "Steam",
+            "factorioPath": "/home/lumividellir/.local/share/Steam/steamapps/common/Factorio/bin/x64/factorio"
+        }
+    ]
+}

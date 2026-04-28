@@ -30,3 +30,28 @@ Date: 26. 04. 2026
   Ease of use:
     - Changed blacklist to be runtime-global instead of startup
     - Changed blacklist-as-whitelist to be runtime-global instead of startup
+---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 29. 04. 2026
+  Major Features:
+    - Roboports are now supported the same as accumulators
+    - Personal batteries (equipment) are now supported and can store energy the same as accumulators do
+      Kinda limited, only works if you equip it on your current equipped armor via cursor and not ctrl/shift+click
+      Because factorio doesn't tell which itemstack was used on equip
+    - Personal shields (equipment) are now supported the same as batteries
+    - Personal roboports (equipment) are now supported the same as batteries
+  Minor Features:
+    - Added custom command to migrate any existing pre v0.3.0 charged items in player's inventory to new working format
+      /smp_migrate_items
+  Changes:
+    - Changed mod settings layout and added "Labels" (dummy settings) for better readability
+    - Switched from string color settings to actual color picker
+  Locale:
+    - Changed layout to more readable one
+  Bugfixes:
+    - Forgot to remove old require bigdatastring dependency in data final fixes
+  Scripting:
+    - Many variable names were changed to more logical and consistent ones
+      Yes that MAY break existing saved and settings, but its not that critical
+      There will be a command to migrate all accumulators to new format in player's inventory
+    - Separated most of the code into large varaity of auxiliary functions
